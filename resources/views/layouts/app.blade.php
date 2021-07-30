@@ -21,7 +21,7 @@
             <div class="container mx-auto flex justify-between items-center px-6">
                 <div>
                     <a href="{{ url('/') }}" class="text-lg font-semibold text-gray-100 no-underline">
-                        {{ config('app.name', 'Laravel') }}
+                        {{ config('app.name', 'Blog') }}
                     </a>
                 </div>
                 <nav class="space-x-4 text-gray-300 text-sm sm:text-base">
@@ -33,8 +33,8 @@
                             <a class="no-underline hover:underline" href="{{ route('register') }}">{{ __('Register') }}</a>
                         @endif
                     @else
-                        <span>{{ Auth::user()->name }}</span>
-                        <a href='/blog' >Blog</a>
+                        <span>Welcome {{ Auth::user()->name }}</span>
+                        <a href='/blog' class="no-underline hover:underline">Blog</a>
 
                         <a href="{{ route('logout') }}"
                            class="no-underline hover:underline"
