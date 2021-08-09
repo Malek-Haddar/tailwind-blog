@@ -18,8 +18,10 @@
 
             <div class="w-full p-6">
                 <p class="text-gray-700">
-                    You are logged in!
+                    You are logged in with
                 </p>
+                <br>
+                <img src="{{ Voyager::image(setting('site.logo'))}}" alt="">
             </div>
         </section>
     </div>

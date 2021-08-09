@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Post;
+use App\Models\Product;
 use Illuminate\Http\Request;
 use Cviebrock\EloquentSluggable\Services\SlugService;
 
@@ -10,19 +11,24 @@ use Cviebrock\EloquentSluggable\Services\SlugService;
 
 class PostsController extends Controller
 {
-    public function __construct()
+    /*  public function __construct()
     {
         $this->middleware('auth', ['except' => ['index', 'show']]);
-    }
+    } */
     /**
      * Display a listing of the resource.
      *--
      * @return \Illuminate\Http\Response
      */
+    /*  public function index()
+    {
+        return view('blog.index')
+            ->with('posts', Post::latest()->get());
+    } */
     public function index()
     {
         return view('blog.index')
-            ->with('posts', Post::orderBy('updated_at', 'DESC')->get());
+            ->with('posts', Post::all());
     }
 
     /**
@@ -66,7 +72,8 @@ class PostsController extends Controller
      */
     public function show(Post $post)
     {
-        //
+        return view('blog.show')
+            ->with('post', $post);
     }
 
     /**
