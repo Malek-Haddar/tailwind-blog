@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class Posts extends Migration
+class CreatePostsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -15,7 +15,6 @@ class Posts extends Migration
     {
         Schema::create('posts', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('slug');
             $table->string('title');
             $table->longText('description');
             $table->timestamps();
@@ -31,6 +30,6 @@ class Posts extends Migration
      */
     public function down()
     {
-        //
+        Schema::dropIfExists('posts');
     }
 }

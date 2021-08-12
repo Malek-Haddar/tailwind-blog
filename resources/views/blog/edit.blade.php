@@ -9,7 +9,7 @@
     </div>
 </div>
 
-@if ($errors->any())
+ @if ($errors->any())
     <div class="w-4/5 m-auto">
         <ul>
             @foreach ($errors->all() as $error)
@@ -23,7 +23,7 @@
 
 <div class="w-4/5 m-auto pt-20">
     <form
-        action="/blog/{{ $post }}"
+        action="/blog/{{ $post->id }}"
         method="POST"
         enctype="multipart/form-data">
         @csrf

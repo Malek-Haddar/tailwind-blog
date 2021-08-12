@@ -11,10 +11,10 @@ use Cviebrock\EloquentSluggable\Services\SlugService;
 
 class PostsController extends Controller
 {
-    /*  public function __construct()
+    public function __construct()
     {
         $this->middleware('auth', ['except' => ['index', 'show']]);
-    } */
+    }
     /**
      * Display a listing of the resource.
      *--
@@ -28,8 +28,9 @@ class PostsController extends Controller
     public function index()
     {
         return view('blog.index')
-            ->with('posts', Post::all());
+            ->with('posts', Post::latest()->get());
     }
+
 
     /**
      * Show the form for creating a new resource.
@@ -56,10 +57,8 @@ class PostsController extends Controller
         Post::create([
             'title' => $request->input('title'),
             'description' => $request->input('description'),
-            'slug' => SlugService::createSlug(Post::class, 'slug', $request->title),
             'user_id' => auth()->user()->id
         ]);
-
         return redirect('/blog')
             ->with('message', 'Your post has been added!');
     }
@@ -70,10 +69,10 @@ class PostsController extends Controller
      * @param  \App\Models\Post  $post
      * @return \Illuminate\Http\Response
      */
-    public function show(Post $post)
+    public function show(Post $post, $id)
     {
         return view('blog.show')
-            ->with('post', $post);
+            ->with('post', Post::where('id', $id)->first());
     }
 
     /**
@@ -82,10 +81,12 @@ class PostsController extends Controller
      * @param  \App\Models\Post  $post
      * @return \Illuminate\Http\Response
      */
-    public function edit($slug)
+    public function edit(Post $post, $id)
     {
         return view('blog.edit')
-            ->with('post', Post::where('slug', $slug)->first());
+            ->with('post', Post::where('id', $id)->first());
+        /* $post = Post::find($id);
+        return view('blog.edit', compact('post')); */
     }
 
     /**
@@ -95,19 +96,18 @@ class PostsController extends Controller
      * @param  \App\Models\Post  $post
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $slug)
+    public function update(Request $request, Post  $post, $id)
     {
         $request->validate([
             'title' => 'required',
             'description' => 'required',
         ]);
-
-        Post::where('slug', $slug)
+        Post::where('id', $id)
             ->update([
                 'title' => $request->input('title'),
                 'description' => $request->input('description'),
-                'slug' => SlugService::createSlug(Post::class, 'slug', $request->title),
                 'user_id' => auth()->user()->id
+
             ]);
 
         return redirect('/blog')
@@ -119,9 +119,10 @@ class PostsController extends Controller
      * @param  \App\Models\Post  $post
      * @return \Illuminate\Http\Response
      */
-    public function destroy($slug)
+    public function destroy(Post $post, $id)
     {
-        $post = Post::where('slug', $slug);
+        $post = Post::where('id', $id);
+
         $post->delete();
 
         return redirect('/blog')

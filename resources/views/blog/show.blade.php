@@ -2,6 +2,10 @@
 
 @section('content')
 <div class="w-4/5 m-auto text-left">
+    <div class="mt-8" ></div>
+    <a href="/blog" class=" bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded-full">
+                        Go back
+                    </a>
     <div class="py-15">
         <h1 class="text-6xl">
             {{ $post->title }}

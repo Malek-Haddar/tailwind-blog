@@ -9,7 +9,7 @@
     </div>
 </div>
 
- @if (session()->has('message'))
+  @if (session()->has('message'))
     <div class="w-4/5 m-auto mt-10 pl-2">
         <p class="w-2/6 mb-4 text-gray-50 bg-green-500 rounded-2xl py-4">
             {{ session()->get('message') }}
@@ -21,7 +21,7 @@
     <div class="pt-15 w-4/5 m-auto">
         <a
             href="/blog/create"
-            class="bg-blue-500 uppercase bg-transparent text-gray-100 text-xs font-extrabold py-3 px-5 rounded-3xl">
+            class="bg-blue-500 hover:bg-blue-300 text-white font-bold py-2 px-8 rounded-full">
             Create post
         </a>
     </div>
@@ -60,25 +60,34 @@
                 {!! $post->body !!}
             </div> --}}
 
-            @if (isset(Auth::user()->id) && Auth::user()->id == $post->user_id)
-                <span class="float-right">
+         @if (isset(Auth::user()->id) && Auth::user()->id == $post->user_id)
+              <span class="float-right bg-green-300 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-full ml-4">
                     <a
-                    href="/blog/{{ $post->slug }}/edit"
+                    href="/blog/{{ $post->id }}/edit"
 
-                        class="text-gray-700 italic hover:text-gray-900 pb-1 border-b-2">
+                        class="">
                         Edit
                     </a>
                 </span>
 
-                <span class="float-right">
+              <span class=" float-right bg-yellow-300 hover:bg-yellow-700 text-white font-bold py-2 px-4 rounded-full ml-4">
+                    <a
+                    href="/blog/{{ $post->id }}"
+
+                        class="">
+                        Show
+                    </a>
+                </span>
+
+                <span class="float-right bg-red-300 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-full">
                      <form
-                        action="/blog/{{ $post->title }}"
+                        action="/blog/{{ $post->id }}"
                         method="POST">
                         @csrf
                         @method('delete')
 
                         <button
-                            class="text-red-500 pr-3"
+                            class=""
                             type="submit">
                             Delete
                         </button>
@@ -86,7 +95,7 @@
                     </form>
                 </span>
             @endif
-      </div>
+     </div>
     </div>
 @endforeach
 
